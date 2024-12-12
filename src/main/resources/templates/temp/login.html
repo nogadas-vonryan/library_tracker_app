@@ -1,0 +1,12 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+	<form method="POST" action="/login">
+		<input type="hidden" name="_csrf" th:value="${_csrf.token}" />
+		<input type="text" name="username" placeholder="username"> 
+		<input type="password" name="password" placeholder="password">
+		<button type="submit">Login</button>
+	</form>
+
+</body>
+</html>

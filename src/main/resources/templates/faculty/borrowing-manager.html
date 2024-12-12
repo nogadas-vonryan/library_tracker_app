@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../stylesheet/main.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+    <title>Borrowing Manager</title>
+</head>
+
+<body class="h-screen flex flex-col justify-between">
+    <!-- Searchbar -->
+    <div class="p-4 pb-2 bg-primary">
+        <div class="text-white font-bold text-2xl pb-2">Borrowing Manager</div>
+        <div class="flex">
+            <search class="grow">
+                <form action="">
+                    <input type="text" placeholder=" Search for a user or book..." class="border p-1 w-full rounded-xl">
+                </form>
+            </search>
+            <button class="sidebar-toggle">
+                <div class="material-symbols-outlined text-white !text-3xl pl-2">tune</div>
+            </button>
+        </div>
+    </div>
+
+    <div class="grow flex overflow-hidden">
+        <!-- Contents -->
+        <div class="grow overflow-auto p-2">
+            <div class="flex justify-between border p-2 mb-2 rounded-md">
+                <div>User borrowed <span>Book</span></div>
+                <span>2024-1-1</span>
+            </div>
+            <div class="flex justify-between border p-2 mb-2 rounded-md">
+                <div>User borrowed <span>Book</span></div>
+                <span>2024-1-1</span>
+            </div>
+            <div class="flex justify-between border p-2 mb-2 rounded-md">
+                <div>User borrowed <span>Book</span></div>
+                <span>2024-1-1</span>
+            </div>
+            <div class="flex justify-between border p-2 mb-2 rounded-md">
+                <div>User borrowed <span>Book</span></div>
+                <span>2024-1-1</span>
+            </div>
+            <div class="flex justify-between border p-2 mb-2 rounded-md">
+                <div>User borrowed <span>Book</span></div>
+                <span>2024-1-1</span>
+            </div>
+            <div class="flex justify-between border p-2 mb-2 rounded-md">
+                <div>User borrowed <span>Book</span></div>
+                <span>2024-1-1</span>
+            </div>
+            <div class="flex justify-between border p-2 mb-2 rounded-md">
+                <div>User borrowed <span>Book</span></div>
+                <span>2024-1-1</span>
+            </div>
+            <div class="flex justify-between border p-2 mb-2 rounded-md">
+                <div>User borrowed <span>Book</span></div>
+                <span>2024-1-1</span>
+            </div>
+            <div class="flex justify-between border p-2 mb-2 rounded-md">
+                <div>User borrowed <span>Book</span></div>
+                <span>2024-1-1</span>
+            </div>
+            <div class="flex justify-between border p-2 mb-2 rounded-md">
+                <div>User borrowed <span>Book</span></div>
+                <span>2024-1-1</span>
+            </div>
+            <div class="flex justify-between border p-2 mb-2 rounded-md">
+                <div>User borrowed <span>Book</span></div>
+                <span>2024-1-1</span>
+            </div>
+            <div class="flex justify-between border p-2 mb-2 rounded-md">
+                <div>User borrowed <span>Book</span></div>
+                <span>2024-1-1</span>
+            </div>
+        </div>
+
+        <!-- Sidebar -->
+        <div class="sidebar fixed right-0 bg-primary w-4/5 h-full translate-x-full z-[2]">
+        </div>
+    </div>
+
+    <!-- Add Button -->
+    <button class="p-3 w-fit absolute bottom-24 right-6 bg-primary rounded-xl z-0">
+        <div class="material-symbols-outlined text-white !text-4xl">add</div>
+    </button>
+
+    <!-- Navbar -->
+    <div class="py-3 flex justify-around bg-primary text-white z-[2]">
+        <a href="./book-manager.html" class="grow text-center">
+            <span class="material-symbols-outlined !text-4xl">library_books</span>
+        </a>
+        <a href="./borrowing-manager.html" class="grow text-center">
+            <span class="material-symbols-outlined !text-4xl">local_library</span>
+        </a>
+        <a href="./user-manager.html" class="grow text-center">
+            <span class="material-symbols-outlined !text-4xl">manage_accounts</span>
+        </a>
+        <a href="./logout.html" class="grow text-center">
+            <span class="material-symbols-outlined !text-4xl">logout</span>
+        </a>
+    </div>
+
+    <script src="../js/sidebar.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,29 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<h1>Borrow a book</h1>
+<div th:if="${error == 'user'}">
+	<p>User not found</p>
+</div>
+<div th:if="${error == 'book'}">
+	<p>Book not found</p>
+</div>
+<form method="POST" action="/borrowing-records">
+    <input type="hidden" name="_csrf" th:value="${_csrf.token}" />
+    <input type="text" name="title" placeholder="title">
+    <button type="submit">Borrow</button>
+</form>
+
+<h2>Borrow Status List</h2>
+<div th:if="${#lists.isEmpty(records)}">
+    <p>No records found</p>
+</div>
+<ul th:unless="${#lists.isEmpty(records)}">
+	<li th:each="record : ${records}">
+		<span th:text="${record.user?.username ?: 'N/A'}"></span>
+		<span th:text="${record.book?.title ?: 'N/A'}"></span>
+	</li>
+</ul>
+
+</body>
+</html>

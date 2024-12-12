@@ -1,0 +1,13 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+    <h1>Register</h1>
+    <p th:text="${_csrf.token}"></p>
+	<form method="POST" action="/register">
+		<input type="hidden" name="_csrf" th:value="${_csrf.token}" /> 
+		<input type="text" name="username" placeholder="username"> 
+		<input type="password" name="password" placeholder="password"> 
+		<input type="password" name="confirmPassword" placeholder="confirm password">
+		<button type="submit">Register</button>
+	</form>
+</body>
+</html>
