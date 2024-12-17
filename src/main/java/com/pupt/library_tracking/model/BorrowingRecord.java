@@ -7,11 +7,12 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.NamedAttributeNode;
 import jakarta.persistence.NamedEntityGraph;
-import jakarta.persistence.OneToOne;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 
 @Getter
+@Setter
 @ToString
 @Entity
 @NamedEntityGraph(name = "BorrowingRecord.userBook", attributeNodes = {
@@ -23,16 +24,18 @@ public class BorrowingRecord {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
+	private boolean isReturned;
 	private String borrowDate;
 	private String returnDate;
 	
 	protected BorrowingRecord() { }
 	
-	public BorrowingRecord(User user, Book book) {
+	public BorrowingRecord(User user, Book book, String borrowDate, String returnDate) {
 		this.user = user;
 		this.book = book;
-//		this.borrowDate = borrowDate;
-//		this.returnDate = returnDate;
+		this.borrowDate = borrowDate;
+		this.returnDate = returnDate;
+		this.isReturned = false;
 	}
 	
 	@ManyToOne

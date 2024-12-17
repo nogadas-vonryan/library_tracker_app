@@ -27,25 +27,28 @@ public class BorrowingRecordService {
 		this.userRepository = userRepository;
 	}
 	
-	public void saveBorrowingRecord(String username, String bookTitle) throws UserNotFoundException, BookNotFoundException {
-		User user = userRepository.findByUsername(username).get();
+	public void saveBorrowingRecord(String studentNumber, String bookTitle, String borrowDate, String returnDate) throws UserNotFoundException, BookNotFoundException {
+		User user = userRepository.findByStudentNumber(studentNumber).get();
 		Book book = bookRepository.findByTitle(bookTitle);
-		
-		if (user == null) {
-			throw new UserNotFoundException("User not found");
+
+		if(user == null) {
+            throw new UserNotFoundException("User not found");
 		}
-		
 		if (book == null) {
 			throw new BookNotFoundException("Book not found");
 		}
 		
 		try {
-			borrowingRecordRepository.save(new BorrowingRecord(user, book));
+			borrowingRecordRepository.save(new BorrowingRecord(user, book, borrowDate, returnDate));
 		} catch (Exception e) {
 		    throw new RuntimeException("Error saving borrowing record");
 		}
 		
 		System.out.println("Added order: [" + book.getTitle() + "] [" + user.getUsername() + "]");
+	}
+	
+	public void deleteBorrowingRecord(int id) {
+		borrowingRecordRepository.deleteById(id);
 	}
 	
 	public List<BorrowingRecord> findAllBorrowingRecords() {

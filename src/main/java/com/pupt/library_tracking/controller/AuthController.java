@@ -5,7 +5,6 @@ import java.security.Principal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -40,10 +39,14 @@ public class AuthController {
 	
 	@PostMapping("/register")
 	public String registerUser(
-			@RequestParam String username, 
+			@RequestParam String studentNumber,
+			@RequestParam String firstName,
+			@RequestParam String lastName,
 			@RequestParam String password) {
 		User user = new User(
-				username, 
+				studentNumber,
+				firstName,
+				lastName,
 				passwordEncoder.encode(password)
 			);
 	    
@@ -57,15 +60,20 @@ public class AuthController {
 	public String home(Principal principal) {
 		if (principal != null) {
 			System.out.println("User already logged in");
-			return "redirect:/dashboard";
+			return "redirect:/redirect";
 		}
 		
 		return "index";
 	}
-//	
-//	@GetMapping("/books")
-//	public String dashboard(Model model, Principal principal) {
-////		model.addAttribute("username", principal.getName());
-//		return "book_list";
-//	}
+
+	@GetMapping("/redirect")
+	public String authRedirect(Principal principal) {
+		User user = userRepository.findByStudentNumber(principal.getName()).get();
+		
+		if (user.getRoles().contains("ADMIN")) {
+			return "redirect:/admin/books";
+		}
+		
+		return "redirect:/user/books";
+	}
 }

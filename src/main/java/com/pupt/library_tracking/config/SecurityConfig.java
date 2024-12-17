@@ -16,10 +16,10 @@ public class SecurityConfig {
 	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		return http
 				.authorizeHttpRequests(auth -> auth
-						.requestMatchers("/", "/about", "/login", "/register", "/register-user", "/stylesheet/**", "/assets/**", "/js/**")
+						.requestMatchers("/", "/about", "/login", "/register", "/uploads/**", "/stylesheet/**", "/assets/**", "/js/**")
 						.permitAll()
 						.anyRequest().authenticated())
-				.formLogin(form -> form.loginPage("/login").defaultSuccessUrl("/books", true)
+				.formLogin(form -> form.loginPage("/login").defaultSuccessUrl("/redirect", true)
 						.failureUrl("/login?error=true").permitAll())
 				.build();
 	}
