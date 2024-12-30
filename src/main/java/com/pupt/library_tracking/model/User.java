@@ -1,8 +1,10 @@
 package com.pupt.library_tracking.model;
 
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -26,7 +28,7 @@ public class User implements UserDetails {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	private String studentNumber;
+	private String referenceNumber;
 	private String firstName;
 	private String lastName;
 	private String password;
@@ -34,10 +36,13 @@ public class User implements UserDetails {
 	@ElementCollection(fetch = FetchType.EAGER)
 	private Collection<String> roles;
 	
+	@CreatedDate
+	private LocalDateTime dateCreated;
+	
 	protected User() { }
 	
-	public User(String studentNumber, String firstName, String lastName, String password) {
-		this.studentNumber = studentNumber;
+	public User(String referenceNumber, String firstName, String lastName, String password) {
+		this.referenceNumber = referenceNumber;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.password = password;
@@ -56,6 +61,6 @@ public class User implements UserDetails {
 
 	@Override
 	public String getUsername() {
-		return studentNumber;
+		return referenceNumber;
 	}
 }

@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -25,12 +26,19 @@ public class UserBookController {
 		List<Book> books = bookRepository.findAll();
 		
 		model.addAttribute("books", books);	
-		return "book_list";
+		return "user-books";
 	}
 
 	@PostMapping("/user/books")
 	public String addBook(@RequestParam String title, @RequestParam String author, @RequestParam String category) {
 		bookRepository.save(new Book(title, author, category));
-		return "redirect:/books";
+		return "redirect:/user/books";
+	}
+	
+	@GetMapping("/user/books/{id}")
+	public String showBook(@PathVariable int id, Model model) {
+		Book book = bookRepository.findById(id);
+		model.addAttribute("book", book);
+		return "user-books-read";
 	}
 }

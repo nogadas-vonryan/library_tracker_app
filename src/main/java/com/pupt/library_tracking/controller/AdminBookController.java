@@ -5,9 +5,12 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.time.LocalDate;
+import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
 
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.pupt.library_tracking.model.Book;
+import com.pupt.library_tracking.model.BorrowingRecord;
 import com.pupt.library_tracking.repository.BookRepository;
 
 @Controller
@@ -28,9 +32,32 @@ public class AdminBookController {
 		this.bookRepository = bookRepository;
 	}
 
+//	@GetMapping("/admin/books")
+//	public String showBooks(Model model,
+//			@RequestParam(required = false) String sortBy,
+//			@RequestParam(required = false) String sortOrder) {
+//		if(sortBy == null) sortBy = "id";
+//		if(sortOrder == null) sortOrder = "asc";
+//		
+//		List<Book> books = bookRepository.findAll(Sort.by(Sort.Direction.fromString(sortOrder), sortBy) );
+//		
+//		model.addAttribute("books", books);	
+//		return "admin-books";
+//	}
+	
 	@GetMapping("/admin/books")
-	public String showBooks(Model model) {
-		List<Book> books = bookRepository.findAll();
+	public String showBooks(Model model,
+			@RequestParam(required = false) String search,
+			@RequestParam(required = false) String sortOrder) {
+		
+		List<Book> books;
+		
+		if(search == null) search = "";
+		
+		books = bookRepository.search(search);
+		books = books.stream()
+			.sorted(Comparator.comparing(Book::getTitle))
+			.toList();
 		
 		model.addAttribute("books", books);	
 		return "admin-books";

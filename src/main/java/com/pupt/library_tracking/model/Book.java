@@ -1,5 +1,9 @@
 package com.pupt.library_tracking.model;
 
+import java.time.LocalDateTime;
+
+import org.springframework.data.annotation.CreatedDate;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -21,6 +25,9 @@ public class Book {
 	private String author;
 	private String category;
 	private String imageUrl;
+	
+	@CreatedDate
+	private LocalDateTime dateCreated;
 
 	protected Book() { }
 	

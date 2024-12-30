@@ -1,0 +1,63 @@
+package com.pupt.library_tracking.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+
+@Controller
+public class PageController {
+	
+	@GetMapping("/test/home")
+	public String home() {
+		return "index";
+	}
+	
+	@GetMapping("/test/login")
+	public String login() {
+		return "login";
+	}
+	
+	@GetMapping("/test/register")
+	public String register() {
+		return "register";
+	}
+	
+	@GetMapping("/test/user/books")
+	public String userBooks() {
+		return "user-books";
+	}
+	
+	@GetMapping("/test/user/book/{id}")
+	public String userBookDetails() {
+		return "user-books-read";
+	}
+	
+	@GetMapping("/test/user/records")
+	public String userRecords() {
+		return "user-records";
+	}
+	
+	@GetMapping("/test/admin/books")
+	public String adminBooks() {
+		return "admin-books";
+	}
+	
+	@GetMapping("/test/")
+	public String adminRecords() {
+		return "admin-records";
+	}
+	
+	@GetMapping("/test/")
+	public String adminBookAdd() {
+		return "admin-books-add";
+	}
+	
+	@GetMapping("/test/")
+	public String adminBookEdit() {
+		return "admin-books-edit";
+	}
+	
+	@GetMapping("/test/")
+	public String adminRecordAdd() {
+		return "admin-records-add";
+	}
+}

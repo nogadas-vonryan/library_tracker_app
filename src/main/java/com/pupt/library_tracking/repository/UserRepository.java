@@ -9,6 +9,6 @@ import com.pupt.library_tracking.model.User;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer> {
-    Optional<User> findByStudentNumber(String username);
+    Optional<User> findByReferenceNumber(String username);
     User findById(int id);
 }

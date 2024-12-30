@@ -2,6 +2,7 @@ package com.pupt.library_tracking.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.pupt.library_tracking.exception.BookNotFoundException;
@@ -28,7 +29,7 @@ public class BorrowingRecordService {
 	}
 	
 	public void saveBorrowingRecord(String studentNumber, String bookTitle, String borrowDate, String returnDate) throws UserNotFoundException, BookNotFoundException {
-		User user = userRepository.findByStudentNumber(studentNumber).get();
+		User user = userRepository.findByReferenceNumber(studentNumber).get();
 		Book book = bookRepository.findByTitle(bookTitle);
 
 		if(user == null) {
@@ -51,7 +52,22 @@ public class BorrowingRecordService {
 		borrowingRecordRepository.deleteById(id);
 	}
 	
+	public List<BorrowingRecord> findAllBorrowingRecords(Sort sort) {
+		return borrowingRecordRepository.findAll(sort);
+	}
+	
 	public List<BorrowingRecord> findAllBorrowingRecords() {
 		return borrowingRecordRepository.findAll();
+	}
+
+	
+	public List<BorrowingRecord> findBorrowingRecordsByUser(String referenceNumber) {
+		return borrowingRecordRepository.findByUser_ReferenceNumber(referenceNumber);
+	}
+
+	public void updateBorrowingRecord(int recordId, boolean isReturned) {
+		BorrowingRecord record = borrowingRecordRepository.findById(recordId);
+		record.setReturned(isReturned);
+		borrowingRecordRepository.save(record);
 	}
 }

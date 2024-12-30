@@ -8,13 +8,14 @@ searchbar.addEventListener('input', function () {
 
     if (query === '') return;
 
-    const filteredData = books.filter(item => item.title.toLowerCase().includes(query));
-	console.log(books);
+    const filteredData = data.filter(item => item.title.toLowerCase().includes(query));
+	console.log(data);
 	
     if (filteredData.length > 0) {
         filteredData.forEach(item => {
             const suggestionItem = document.createElement('div');
             suggestionItem.classList.add(
+				'bg-white',
                 'border',
                 'border-t-0',
                 'p-1',
@@ -24,8 +25,7 @@ searchbar.addEventListener('input', function () {
             suggestionItem.textContent = item.title;
 
             suggestionItem.addEventListener('click', function () {
-                searchbar.value = item.title;
-                suggestions.innerHTML = '';
+                location.href = `/user/books/${item.id}`;
             });
 
             suggestions.appendChild(suggestionItem);

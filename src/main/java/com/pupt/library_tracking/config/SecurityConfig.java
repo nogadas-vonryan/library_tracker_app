@@ -16,8 +16,9 @@ public class SecurityConfig {
 	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		return http
 				.authorizeHttpRequests(auth -> auth
-						.requestMatchers("/", "/about", "/login", "/register", "/uploads/**", "/stylesheet/**", "/assets/**", "/js/**")
-						.permitAll()
+						.requestMatchers("/", "/about", "/login", "/register", "/uploads/**", "/stylesheet/**", "/assets/**", "/js/**").permitAll()
+						.requestMatchers("/user/**").hasRole("USER")
+						.requestMatchers("/admin/**").hasRole("ADMIN")
 						.anyRequest().authenticated())
 				.formLogin(form -> form.loginPage("/login").defaultSuccessUrl("/redirect", true)
 						.failureUrl("/login?error=true").permitAll())

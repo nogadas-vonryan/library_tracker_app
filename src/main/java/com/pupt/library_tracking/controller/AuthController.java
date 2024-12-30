@@ -39,12 +39,24 @@ public class AuthController {
 	
 	@PostMapping("/register")
 	public String registerUser(
-			@RequestParam String studentNumber,
+			@RequestParam String referenceNumber,
 			@RequestParam String firstName,
 			@RequestParam String lastName,
-			@RequestParam String password) {
+			@RequestParam String password,
+			@RequestParam String confirmPassword) {
+		
+		if (!password.equals(confirmPassword)) {
+			System.out.println("Passwords do not match");
+			return "redirect:/register?error=true";
+		}
+		
+		if (userRepository.findByReferenceNumber(referenceNumber).isPresent()) {
+			System.out.println("User already exists");
+			return "redirect:/register?error=true";
+		}
+		
 		User user = new User(
-				studentNumber,
+				referenceNumber,
 				firstName,
 				lastName,
 				passwordEncoder.encode(password)
@@ -68,12 +80,14 @@ public class AuthController {
 
 	@GetMapping("/redirect")
 	public String authRedirect(Principal principal) {
-		User user = userRepository.findByStudentNumber(principal.getName()).get();
+		User user = userRepository.findByReferenceNumber(principal.getName()).get();
 		
-		if (user.getRoles().contains("ADMIN")) {
+		if (user.getRoles().contains("ROLE_ADMIN")) {
 			return "redirect:/admin/books";
+		} else if (user.getRoles().contains("ROLE_USER")) {
+			return "redirect:/user/books";
 		}
 		
-		return "redirect:/user/books";
+		return "redirect:/login?error=true";
 	}
 }
