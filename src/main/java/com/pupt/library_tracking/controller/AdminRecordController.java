@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.pupt.library_tracking.dto.RecordAnalyticsDTO;
 import com.pupt.library_tracking.exception.BookNotFoundException;
 import com.pupt.library_tracking.exception.UserNotFoundException;
 import com.pupt.library_tracking.model.BorrowingRecord;
@@ -99,5 +100,19 @@ public class AdminRecordController {
 	public String borrowingRecordDeleteProcessing(@RequestParam int recordId) {
 		borrowingRecordService.deleteBorrowingRecord(recordId);
 		return "redirect:/admin/records";
+	}
+	
+	@GetMapping("/admin/analytics")
+	public String analytics(Model model, @RequestParam(required = false) Integer year) {
+		if(year == null) 
+			year = LocalDate.now().getYear();
+		
+		List<Object[]> records = borrowingRecordRepository.getRecordAnalytics(year);
+		
+		model.addAttribute("records", 
+				records.stream()
+					.map(record -> new RecordAnalyticsDTO((String) record[0], (long) record[1]))
+					.toList());
+		return "admin-analytics";
 	}
 }

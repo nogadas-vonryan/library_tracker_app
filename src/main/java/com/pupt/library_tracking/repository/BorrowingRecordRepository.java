@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import com.pupt.library_tracking.dto.RecordAnalyticsDTO;
 import com.pupt.library_tracking.model.BorrowingRecord;
 
 @Repository
@@ -37,6 +38,16 @@ public interface BorrowingRecordRepository extends JpaRepository<BorrowingRecord
     		+ "   OR b.author LIKE %:searchTerm% "
     		, nativeQuery = true)
     List<BorrowingRecord> search(String searchTerm);
+    
+    @Query(value = "SELECT "
+    		+ "DATE_FORMAT(MIN(borrow_date), '%M') AS month, "
+    		+ "COUNT(*) AS number "
+    		+ "FROM borrowing_record "
+    		+ "WHERE YEAR(borrow_date) = :year "
+    		+ "GROUP BY MONTH(borrow_date) "
+    		+ "ORDER BY MONTH(borrow_date)",
+    		nativeQuery = true)
+    List<Object[]> getRecordAnalytics(int year);
     
 	BorrowingRecord findByBookId(int bookId);
 	BorrowingRecord findById(int id);
