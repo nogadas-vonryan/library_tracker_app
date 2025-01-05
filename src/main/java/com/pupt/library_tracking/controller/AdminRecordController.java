@@ -33,7 +33,6 @@ public class AdminRecordController {
 	@GetMapping("/admin/records")
 	public String borrowingRecordPage(Model model, 
 			@RequestParam(required = false) String search,
-			@RequestParam(required = false) String sortBy,
 			@RequestParam(required = false) String sortOrder,
 			@RequestParam(required = false) String status,
 			@RequestParam(required = false) String month,
@@ -108,7 +107,6 @@ public class AdminRecordController {
 			year = LocalDate.now().getYear();
 		
 		List<Object[]> records = borrowingRecordRepository.getRecordAnalytics(year);
-		
 		model.addAttribute("records", 
 				records.stream()
 					.map(record -> new RecordAnalyticsDTO((String) record[0], (long) record[1]))

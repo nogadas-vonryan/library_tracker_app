@@ -7,6 +7,9 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
+
+import com.pupt.library_tracking.handler.MyLogoutSuccessHandler;
 
 @Configuration
 @EnableWebSecurity
@@ -22,9 +25,15 @@ public class SecurityConfig {
 						.anyRequest().authenticated())
 				.formLogin(form -> form.loginPage("/login").defaultSuccessUrl("/redirect", true)
 						.failureUrl("/login?error=true").permitAll())
+				.logout(logout -> logout.logoutSuccessHandler(logoutSuccessHandler()).logoutUrl("/logout").logoutSuccessUrl("/login").permitAll())
 				.build();
 	}
 
+	@Bean
+	public LogoutSuccessHandler logoutSuccessHandler() {
+		return new MyLogoutSuccessHandler();
+	}
+	
 	@Bean
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();

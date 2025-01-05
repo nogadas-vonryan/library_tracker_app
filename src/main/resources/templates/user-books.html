@@ -71,11 +71,10 @@
 		-->
 		<div class="hidden lg:flex justify-center pt-4">
 			<div class="w-80 relative">
-				<input class="autocomplete-searchbar border rounded-md p-1 w-full" placeholder=" Search for a book..."> 
-				<span class="material-symbols-outlined text-neutral-400 absolute right-0 -translate-x-[4px] translate-y-[3px] z-10">search</span>
-				<div class="autocomplete-suggestion rounded-md absolute z-10 top-full left-0 right-0">
-                	<div class="hidden bg-white border border-t-0 border-b-0 p-1 cursor-pointer hover:bg-primary hover:text-white"></div>
-            	</div>
+				<form method="GET" action="/user/books" class="inline">
+					<input class="autocomplete-searchbar border rounded-md p-1 w-full" name="search" placeholder=" Search for a book..."> 
+					<span class="material-symbols-outlined text-neutral-400 absolute right-0 -translate-x-[4px] translate-y-[3px] z-10">search</span>
+				</form>
 			</div>
 		</div>
 

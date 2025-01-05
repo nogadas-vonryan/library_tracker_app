@@ -1,5 +1,6 @@
 package com.pupt.library_tracking.controller;
 
+import java.util.Comparator;
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
@@ -22,8 +23,16 @@ public class UserBookController {
 	}
 
 	@GetMapping("/user/books")
-	public String showBooks(Model model) {
-		List<Book> books = bookRepository.findAll();
+	public String showBooks(Model model,
+							@RequestParam(required = false) String search) {
+		List<Book> books;
+		
+		if(search == null) search = "";
+		
+		books = bookRepository.search(search);
+		books = books.stream()
+			.sorted(Comparator.comparing(Book::getTitle))
+			.toList();
 		
 		model.addAttribute("books", books);	
 		return "user-books";

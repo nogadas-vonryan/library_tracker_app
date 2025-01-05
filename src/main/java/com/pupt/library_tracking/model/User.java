@@ -46,7 +46,7 @@ public class User implements UserDetails {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.password = password;
-		this.roles = List.of("USER");
+		this.roles = List.of("ROLE_USER");
 	}
 
 	@Override

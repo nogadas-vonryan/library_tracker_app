@@ -25,7 +25,7 @@ public class AuthController {
 	public String login(Principal principal) {
 		if(principal != null) {
             System.out.println("User already logged in");
-            return "redirect:/dashboard";
+            return "redirect:/user/books";
 		}
 		System.out.println("Opened login page");
 		return "login";
@@ -47,12 +47,12 @@ public class AuthController {
 		
 		if (!password.equals(confirmPassword)) {
 			System.out.println("Passwords do not match");
-			return "redirect:/register?error=true";
+			return "redirect:/register?error=PasswordMismatch";
 		}
 		
 		if (userRepository.findByReferenceNumber(referenceNumber).isPresent()) {
 			System.out.println("User already exists");
-			return "redirect:/register?error=true";
+			return "redirect:/register?error=UserExists";
 		}
 		
 		User user = new User(

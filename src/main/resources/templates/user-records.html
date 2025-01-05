@@ -55,9 +55,18 @@
     <!-- Content -->
     <div class="grow p-4 bg-gray-100">
         <div class="hidden lg:block lg:flex justify-center p-4">
-			<input class="border rounded-md p-1 w-2/5"
-				placeholder=" Search for a record..."> <span
-				class="material-symbols-outlined text-neutral-400 -translate-x-[30px] translate-y-[6px]">search</span>
+			<select onchange="updateSorting('sortOrder', this.value)" class="ml-2 pl-2 rounded-md">
+				<option value="" disabled selected>Sort Order</option>
+				<option value="asc">Ascending</option>
+				<option value="desc">Descending</option>
+			</select>
+			<select onchange="updateSorting('status', this.value)" class="ml-2 pl-2 rounded-md">
+				<option value="" disabled selected>Status</option>
+				<option value="borrowing">Borrowing</option>
+				<option value="returned">Returned</option>
+			</select>
+			<input onchange="updateDateSorting(this.value)" class="ml-2 bg-gray-200 rounded-md" type="month" />
+			<a href="/admin/records" class="ml-2 bg-gray-300 text-gray-800 px-4 py-1 rounded-md">Clear Filters</a>
 		</div>
 
         <table class="w-full text-center border-separate border-spacing-y-2">
@@ -70,6 +79,10 @@
                 </tr>
             </thead>
             <tbody>
+            	<tr th:if="${#lists.isEmpty(records)}" class="bg-white shadow-md">
+		            <td colspan="7" class="p-3 text-center font-medium">No record found</td>
+		        </tr>
+            
                 <tr th:each="record : ${records}" class="bg-white shadow-md">
                     <td class="p-3" th:text="${record.book.title}"></td>
                     <td class="p-3">
@@ -94,7 +107,25 @@
 		</a>
 	</div>
 
-    <script src="../js/sidebar.js"></script>
+    <script>
+    
+	  function updateSorting(param, value) {
+	    const url = new URL(window.location.href);
+	    url.searchParams.set(param, value);
+	    window.location.href = url.toString();
+	  }
+	  
+	  function updateDateSorting(value) {
+		value = new Date(value);
+		const month = value.getMonth() + 1;
+		const year = value.getFullYear();
+		  
+	    const url = new URL(window.location.href);
+	    url.searchParams.set('month',month);
+	    url.searchParams.set('year',year);
+		window.location.href = url.toString();
+	  }    
+    </script>
 </body>
 
 </html>
