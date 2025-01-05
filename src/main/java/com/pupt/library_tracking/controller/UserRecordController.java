@@ -1,6 +1,7 @@
 package com.pupt.library_tracking.controller;
 
 import java.security.Principal;
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
@@ -30,11 +31,32 @@ public class UserRecordController {
 	public String borrowingRecordPage(
 			Model model,
 			Principal principal,
+			@RequestParam(required = false) String sortOrder,
+			@RequestParam(required = false) String status,
+			@RequestParam(required = false) String month,
+			@RequestParam(required = false) String year,
 			@RequestParam(required = false) String error) {
-		User user = userRepository.findByReferenceNumber(principal.getName()).get();
 		
-		List<BorrowingRecord> borrowingRecords = borrowingRecordService.findBorrowingRecordsByUser(user.getReferenceNumber());
-		model.addAttribute("records", borrowingRecords);
+		User user = userRepository.findByReferenceNumber(principal.getName()).get();
+		List<BorrowingRecord> records = borrowingRecordService.findBorrowingRecordsByUser(user.getReferenceNumber());
+		
+		records = records.stream()	
+				.filter(record -> status == null || (status.equals("returned") && record.isReturned()) || (status.equals("borrowing") && !record.isReturned()))
+				.filter(record -> month == null || LocalDate.parse(record.getBorrowDate()).getMonthValue() == Integer.parseInt(month))
+				.filter(record -> year == null || LocalDate.parse(record.getBorrowDate()).getYear() == Integer.parseInt(year))
+				.sorted((record1, record2) -> {
+			        LocalDate date1 = LocalDate.parse(record1.getBorrowDate());
+			        LocalDate date2 = LocalDate.parse(record2.getBorrowDate());
+			        
+			        if (sortOrder != null && sortOrder.equals("asc")) {
+			            return date1.compareTo(date2);
+			        } else {
+			            return date2.compareTo(date1);
+			        }
+			    })
+				.toList();
+		
+		model.addAttribute("records", records);
 		model.addAttribute("error", error);
 		return "user-records";
     }
